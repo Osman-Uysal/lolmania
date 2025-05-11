@@ -19,6 +19,7 @@ import {
 } from '@mui/material';
 import SendIcon from '@mui/icons-material/Send';
 import axios from 'axios';
+import config from '../config';
 
 // Available regions
 const REGIONS = [
@@ -53,7 +54,7 @@ function Chatbot() {
     ]);
 
     // Configure axios defaults
-    axios.defaults.baseURL = 'http://localhost:8080';
+    axios.defaults.baseURL = config.API_BASE_URL;
     axios.defaults.headers.common['Accept'] = 'application/json';
     axios.defaults.headers.common['Content-Type'] = 'application/json';
   }, []);
