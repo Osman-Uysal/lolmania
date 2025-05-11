@@ -1,4 +1,7 @@
-const API_BASE_URL = process.env.REACT_APP_API_URL || 'http://localhost:8080/api';
+const API_BASE_URL =
+  process.env.NODE_ENV === 'production'
+    ? 'https://lolmania.onrender.com/api'
+    : (process.env.REACT_APP_API_URL || 'http://localhost:8080/api');
 
 export const API_ENDPOINTS = {
   player: (summonerName) => `${API_BASE_URL}/player/${summonerName}`,
