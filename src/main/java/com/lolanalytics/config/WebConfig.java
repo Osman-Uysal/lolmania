@@ -18,27 +18,14 @@ public class WebConfig implements WebMvcConfigurer {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         
-        // Allow specific origins
-        config.setAllowedOrigins(Arrays.asList(
-            "https://lolmania.onrender.com",
-            "https://lol-analytics-frontend.onrender.com"
-        ));
+        // Allow all origins for debugging (use patterns for subdomain support)
+        config.setAllowedOriginPatterns(Arrays.asList("*"));
         
         // Allow all HTTP methods
-        config.setAllowedMethods(Arrays.asList(
-            "GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD"
-        ));
+        config.setAllowedMethods(Arrays.asList("*"));
         
-        // Allow specific headers
-        config.setAllowedHeaders(Arrays.asList(
-            "Origin",
-            "Content-Type",
-            "Accept",
-            "Authorization",
-            "X-Requested-With",
-            "Access-Control-Request-Method",
-            "Access-Control-Request-Headers"
-        ));
+        // Allow all headers
+        config.setAllowedHeaders(Arrays.asList("*"));
         
         // Expose headers that might be needed by the client
         config.setExposedHeaders(Arrays.asList(
