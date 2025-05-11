@@ -4,11 +4,11 @@ const API_BASE_URL =
     : (process.env.REACT_APP_API_URL || 'http://localhost:8080/api');
 
 export const API_ENDPOINTS = {
-  player: (region, summonerName) => `${API_BASE_URL}/player/${region}/player?summonerName=${encodeURIComponent(summonerName)}`,
-  matches: (region, summonerName, count) => 
-    `${API_BASE_URL}/player/${region}/player/matches?summonerName=${encodeURIComponent(summonerName)}&count=${count}`,
+  player: (region, riotId) => `${API_BASE_URL}/player/${region}/player?riotId=${encodeURIComponent(riotId)}`,
+  matches: (region, riotId, count) => 
+    `${API_BASE_URL}/player/${region}/player/matches?riotId=${encodeURIComponent(riotId)}&count=${count}`,
   matchDetails: (region, matchId) => `${API_BASE_URL}/player/${region}/match-details?matchId=${encodeURIComponent(matchId)}`,
-  chatbotTips: (summonerName) => `${API_BASE_URL}/chatbot/tips/${encodeURIComponent(summonerName)}`,
+  chatbotTips: (riotId) => `${API_BASE_URL}/chatbot/tips/${encodeURIComponent(riotId)}`,
   randomTip: `${API_BASE_URL}/chatbot/random-tip`,
 };
 
