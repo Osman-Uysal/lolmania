@@ -28,6 +28,7 @@ import CloseIcon from '@mui/icons-material/Close';
 import ItemSlot from './ItemSlot';
 import AugmentSlot from './AugmentSlot';
 import ChampionMastery from './ChampionMastery';
+import config from '../config';
 
 const QUEUE_ID_TO_MODE = {
   420: 'Ranked Solo',
@@ -104,12 +105,8 @@ function PlayerProfile() {
         setLoading(true);
         const decodedRiotId = decodeURIComponent(summonerName);
         const [playerResponse, matchesResponse] = await Promise.all([
-          axios.get(`/api/player/${region}/player`, { 
-            params: { riotId: decodedRiotId }
-          }),
-          axios.get(`/api/player/${region}/player/matches`, { 
-            params: { riotId: decodedRiotId, count: 10 }
-          }),
+          axios.get(config.API_ENDPOINTS.player(region, decodedRiotId)),
+          axios.get(config.API_ENDPOINTS.matches(region, decodedRiotId, 10)),
         ]);
         setPlayer(playerResponse.data);
         setMatches(matchesResponse.data);
@@ -117,7 +114,7 @@ function PlayerProfile() {
         setTipsLoading(true);
         try {
           const prompt = buildPrompt(playerResponse.data, matchesResponse.data);
-          const aiResponse = await axios.post('/api/gemini/chat', prompt);
+          const aiResponse = await axios.post(config.API_BASE_URL + '/gemini/chat', prompt);
           setTips(aiResponse.data || 'Tips are currently unavailable.');
         } catch (error) {
           setTips('Unable to generate tips at this time. Please try again later.');
@@ -153,11 +150,7 @@ function PlayerProfile() {
     setModalLoading(true);
     setModalOpen(true);
     try {
-      const res = await axios.get(`/api/player/${region}/match-details`, { 
-        params: { 
-          matchId 
-        }
-      });
+      const res = await axios.get(config.API_ENDPOINTS.matchDetails(region, matchId));
       setModalMatch(res.data);
     } catch (e) {
       console.error('Error fetching match details:', e);

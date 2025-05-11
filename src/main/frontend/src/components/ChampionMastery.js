@@ -27,6 +27,7 @@ import {
   ResponsiveContainer,
 } from 'recharts';
 import InfoIcon from '@mui/icons-material/Info';
+import config from '../config';
 
 const ChampionMastery = ({ region, riotId, showDetailedStatsOnly = false }) => {
   const [masteries, setMasteries] = useState([]);
@@ -39,8 +40,8 @@ const ChampionMastery = ({ region, riotId, showDetailedStatsOnly = false }) => {
       try {
         setLoading(true);
         const [masteriesRes, statsRes] = await Promise.all([
-          fetch(`/api/champion-mastery/${region}/masteries?riotId=${encodeURIComponent(riotId)}`),
-          fetch(`/api/champion-mastery/${region}/stats?riotId=${encodeURIComponent(riotId)}`)
+          fetch(config.API_BASE_URL + `/champion-mastery/${region}/masteries?riotId=${encodeURIComponent(riotId)}`),
+          fetch(config.API_BASE_URL + `/champion-mastery/${region}/stats?riotId=${encodeURIComponent(riotId)}`)
         ]);
 
         if (!masteriesRes.ok || !statsRes.ok) {

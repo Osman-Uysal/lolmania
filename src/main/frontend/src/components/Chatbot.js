@@ -81,20 +81,11 @@ function Chatbot() {
           try {
             // Get player data from backend
             const encodedRiotId = encodeURIComponent(riotId);
-            const playerData = await axios.get(`/api/player/${region}/player`, { 
-              params: { 
-                riotId: encodedRiotId
-              }
-            });
-            const matchesData = await axios.get(`/api/player/${region}/player/matches`, { 
-              params: { 
-                riotId: encodedRiotId, 
-                count: 10 
-              }
-            });
+            const playerData = await axios.get(config.API_ENDPOINTS.player(region, encodedRiotId));
+            const matchesData = await axios.get(config.API_ENDPOINTS.matches(region, encodedRiotId, 10));
             // Use Gemini to generate personalized tips
             const prompt = buildPrompt(playerData.data, matchesData.data);
-            const aiResponse = await axios.post('/api/gemini/chat', prompt);
+            const aiResponse = await axios.post(config.API_BASE_URL + '/gemini/chat', prompt);
             response = aiResponse.data || 'Sorry, I could not generate a tip at this time.';
           } catch (error) {
             let errorMsg = 'An unexpected error occurred. Please try again.';
@@ -123,7 +114,7 @@ function Chatbot() {
       } else {
         // Use Gemini for general queries
         const prompt = `You are a League of Legends expert. Answer this question about League of Legends: ${input}. Keep the response concise and helpful.`;
-        const aiResponse = await axios.post('/api/gemini/chat', prompt);
+        const aiResponse = await axios.post(config.API_BASE_URL + '/gemini/chat', prompt);
         response = aiResponse.data || 'Sorry, I could not generate a tip at this time.';
       }
       setMessages((prev) => [
