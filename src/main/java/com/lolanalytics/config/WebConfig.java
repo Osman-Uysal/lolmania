@@ -19,7 +19,8 @@ public class WebConfig implements WebMvcConfigurer {
         
         // Allow specific origins
         config.setAllowedOrigins(Arrays.asList(
-            "https://lolmania.onrender.com"
+            "https://lolmania.onrender.com",
+            "https://lol-analytics-frontend.onrender.com"
         ));
         
         // Allow all HTTP methods
@@ -58,7 +59,7 @@ public class WebConfig implements WebMvcConfigurer {
     @Override
     public void addCorsMappings(CorsRegistry registry) {
         registry.addMapping("/**")
-                .allowedOrigins("https://lolmania.onrender.com")
+                .allowedOrigins("https://lolmania.onrender.com", "https://lol-analytics-frontend.onrender.com")
                 .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS", "PATCH", "HEAD")
                 .allowedHeaders("*")
                 .exposedHeaders("Access-Control-Allow-Origin", "Access-Control-Allow-Credentials", "Authorization")
