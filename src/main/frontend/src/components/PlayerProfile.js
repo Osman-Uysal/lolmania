@@ -181,7 +181,7 @@ function PlayerProfile() {
     if (modalMatch.info.queueId === 1700) { // Arena Mode
       const teams = [];
       for (let i = 0; i < 8; i++) {
-        const teamMembers = modalMatch.info.participants.filter(p => Math.floor(p.teamId / 100) === i);
+        const teamMembers = Array.isArray(modalMatch.info.participants) ? modalMatch.info.participants.filter(p => Math.floor(p.teamId / 100) === i) : [];
         if (teamMembers.length > 0) {
           teams.push({
             members: teamMembers,
@@ -194,7 +194,7 @@ function PlayerProfile() {
       // Sort teams by placement
       teams.sort((a, b) => a.placement - b.placement);
       
-      return teams.map((team, index) => (
+      return Array.isArray(teams) && teams.map((team, index) => (
         <Paper 
           key={index} 
           sx={{ 
@@ -214,7 +214,7 @@ function PlayerProfile() {
             </Typography>
           </Box>
           
-          {team.members.map((p, i) => (
+          {Array.isArray(team.members) && team.members.map((p, i) => (
             <Box 
               key={p.puuid || i}
               sx={{
@@ -312,8 +312,8 @@ function PlayerProfile() {
       ));
     } else {
       // Regular 5v5 teams rendering
-      const blueTeam = modalMatch.info.participants.filter(p => p.teamId === 100);
-      const redTeam = modalMatch.info.participants.filter(p => p.teamId === 200);
+      const blueTeam = Array.isArray(modalMatch.info.participants) ? modalMatch.info.participants.filter(p => p.teamId === 100) : [];
+      const redTeam = Array.isArray(modalMatch.info.participants) ? modalMatch.info.participants.filter(p => p.teamId === 200) : [];
       
       return (
         <>
@@ -336,7 +336,7 @@ function PlayerProfile() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {blueTeam.map((p, i) => (
+                  {Array.isArray(blueTeam) && blueTeam.map((p, i) => (
                     <TableRow key={p.puuid || i}>
                       <TableCell>{p.summonerName}</TableCell>
                       <TableCell>
@@ -426,7 +426,7 @@ function PlayerProfile() {
                   </TableRow>
                 </TableHead>
                 <TableBody>
-                  {redTeam.map((p, i) => (
+                  {Array.isArray(redTeam) && redTeam.map((p, i) => (
                     <TableRow key={p.puuid || i}>
                       <TableCell>{p.summonerName}</TableCell>
                       <TableCell>
@@ -607,7 +607,7 @@ function PlayerProfile() {
                         </TableRow>
                       </TableHead>
                       <TableBody>
-                        {matches.map((match, idx) => (
+                        {Array.isArray(matches) && matches.map((match, idx) => (
                           <TableRow 
                             key={match.matchId || idx} 
                             hover 
