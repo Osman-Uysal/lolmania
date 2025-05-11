@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="3" author="lol-analytics">
+        <createTable tableName="champion_mastery">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="player_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_mastery_player" references="player(id)"/>
+            </column>
+            <column name="champion_id" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="champion_name" type="varchar(255)"/>
+            <column name="champion_level" type="integer"/>
+            <column name="champion_points" type="integer"/>
+            <column name="last_play_time" type="bigint"/>
+            <column name="chest_granted" type="boolean"/>
+            <column name="tokens_earned" type="integer"/>
+            <column name="champion_icon_url" type="varchar(255)"/>
+            <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        
+        <createIndex tableName="champion_mastery" indexName="idx_mastery_player_id">
+            <column name="player_id"/>
+        </createIndex>
+        
+        <createIndex tableName="champion_mastery" indexName="idx_mastery_champion_id">
+            <column name="champion_id"/>
+        </createIndex>
+        
+        <createIndex tableName="champion_mastery" indexName="idx_mastery_player_champion">
+            <column name="player_id"/>
+            <column name="champion_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog> 

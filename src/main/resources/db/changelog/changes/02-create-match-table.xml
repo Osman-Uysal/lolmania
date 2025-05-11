@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="2" author="lol-analytics">
+        <createTable tableName="match">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="match_id" type="varchar(255)">
+                <constraints nullable="false" unique="true"/>
+            </column>
+            <column name="player_id" type="bigint">
+                <constraints nullable="false" foreignKeyName="fk_match_player" references="player(id)"/>
+            </column>
+            <column name="champion_name" type="varchar(255)"/>
+            <column name="champion_icon_url" type="varchar(255)"/>
+            <column name="kills" type="integer"/>
+            <column name="deaths" type="integer"/>
+            <column name="assists" type="integer"/>
+            <column name="total_damage_dealt" type="integer"/>
+            <column name="gold_earned" type="integer"/>
+            <column name="vision_score" type="integer"/>
+            <column name="win" type="boolean"/>
+            <column name="queue_id" type="integer"/>
+            <column name="team_id" type="integer"/>
+            <column name="augments" type="text"/>
+            <column name="augment_names" type="text"/>
+            <column name="game_creation" type="timestamp"/>
+            <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        
+        <createIndex tableName="match" indexName="idx_match_match_id">
+            <column name="match_id"/>
+        </createIndex>
+        
+        <createIndex tableName="match" indexName="idx_match_player_id">
+            <column name="player_id"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog> 

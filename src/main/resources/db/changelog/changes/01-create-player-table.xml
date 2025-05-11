@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog
+                      http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-4.3.xsd">
+
+    <changeSet id="1" author="lol-analytics">
+        <createTable tableName="player">
+            <column name="id" type="bigint" autoIncrement="true">
+                <constraints primaryKey="true" nullable="false"/>
+            </column>
+            <column name="summoner_name" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="tag_line" type="varchar(255)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="summoner_level" type="integer"/>
+            <column name="profile_icon_id" type="integer"/>
+            <column name="profile_icon_url" type="varchar(255)"/>
+            <column name="tier" type="varchar(50)"/>
+            <column name="rank" type="varchar(50)"/>
+            <column name="league_points" type="integer"/>
+            <column name="wins" type="integer"/>
+            <column name="losses" type="integer"/>
+            <column name="puuid" type="varchar(255)">
+                <constraints unique="true"/>
+            </column>
+            <column name="created_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+            <column name="updated_at" type="timestamp" defaultValueComputed="CURRENT_TIMESTAMP"/>
+        </createTable>
+        
+        <createIndex tableName="player" indexName="idx_player_puuid">
+            <column name="puuid"/>
+        </createIndex>
+        
+        <createIndex tableName="player" indexName="idx_player_summoner_name">
+            <column name="summoner_name"/>
+        </createIndex>
+    </changeSet>
+</databaseChangeLog> 
