@@ -14,6 +14,7 @@ public class WebConfig implements WebMvcConfigurer {
     
     @Bean
     public CorsFilter corsFilter() {
+        System.out.println("CORS filter initialized!");
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         CorsConfiguration config = new CorsConfiguration();
         
